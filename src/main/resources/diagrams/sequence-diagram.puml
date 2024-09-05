@@ -1,0 +1,30 @@
+@startuml
+participant Cliente
+participant UserController
+participant UserService
+participant UserRepository
+
+' Diagrama para signUp
+Cliente -> UserController: signUp(UserRequest)
+UserController -> UserService: signUp(UserRequest)
+UserService -> UserService: mapRequestToEntity(UserRequest)
+UserService -> UserRepository: save(UserEntity)
+UserRepository -> UserRepository: persist in DB
+UserRepository -> UserService: return
+UserService -> UserService: mapEntityToResponse(UserEntity)
+UserService -> UserController: return UserResponse
+UserController -> Cliente: return UserResponse
+
+' Diagrama para login
+Cliente -> UserController: login(UserRequest)
+UserController -> UserService: validateToken(jwt, email)
+UserController -> UserService: login(UserRequest)
+UserService -> UserService: mapRequestToEntity(UserRequest)
+UserService -> UserRepository: findByEmail(String email)
+UserRepository -> UserRepository: search in DB
+UserRepository -> UserService: return UserEntity
+UserService -> UserService: validatePassword(UserEntity)
+UserService -> UserController: return UserResponse or Error
+UserController -> Cliente: return UserResponse or Error
+
+@enduml
