@@ -12,6 +12,6 @@ public interface UserService {
       UserResponse signUp(UserRequest userRequest) throws DataIntegrityViolationException;
       UserResponse login (UserRequest userRequest) throws UserException;
 
-      Optional<UserResponse> findByEmail(String email) throws UserException;
+
 
 }
