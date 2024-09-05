@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<UserResponse> optionalUserResponse =  userRepository
                 .findByEmail(userRequest.getEmail())
+                .filter(userEntity -> passwordEncoder.matches(userRequest.getPassword(),userEntity.getPassword()))
                 .map(this::toResponseFull);
 
         return optionalUserResponse.
